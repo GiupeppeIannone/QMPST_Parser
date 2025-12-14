@@ -1,0 +1,5 @@
+μt.
+    Rnd -> Bob:(bit).Alice->Bob:{
+        data(qbit).Bob->Rnd:loop.t ,
+        stop.Bob->Rnd:stop.Bob->Alice:(bit).Alice->Bob:(bit).Bob->Env:{verified.end, notVerified.end}
+    }
