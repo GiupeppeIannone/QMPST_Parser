@@ -1,0 +1,1 @@
+Env -> Alice:(qbit).Source -> Alice:(qbit).Source -> Bob:(qbit).Alice ->Bob:(bit).Bob -> Env:(qbit).end

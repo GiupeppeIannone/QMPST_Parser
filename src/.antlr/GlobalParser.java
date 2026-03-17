@@ -102,14 +102,6 @@ public class GlobalParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_prog; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterProg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitProg(this);
-		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -151,14 +143,6 @@ public class GlobalParser extends Parser {
 	public static class VariableContext extends GlobalContext {
 		public TerminalNode TYPEVAR() { return getToken(GlobalParser.TYPEVAR, 0); }
 		public VariableContext(GlobalContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterVariable(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitVariable(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TransmissionContext extends GlobalContext {
@@ -172,27 +156,11 @@ public class GlobalParser extends Parser {
 			return getRuleContext(LabelTypeSetContext.class,0);
 		}
 		public TransmissionContext(GlobalContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterTransmission(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitTransmission(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class EndContext extends GlobalContext {
 		public TerminalNode END() { return getToken(GlobalParser.END, 0); }
 		public EndContext(GlobalContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterEnd(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitEnd(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class RecursionContext extends GlobalContext {
@@ -201,14 +169,6 @@ public class GlobalParser extends Parser {
 			return getRuleContext(GlobalContext.class,0);
 		}
 		public RecursionContext(GlobalContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterRecursion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitRecursion(this);
-		}
 	}
 
 	public final GlobalContext global() throws RecognitionException {
@@ -291,14 +251,6 @@ public class GlobalParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_labelTypeSet; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterLabelTypeSet(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitLabelTypeSet(this);
-		}
 	}
 
 	public final LabelTypeSetContext labelTypeSet() throws RecognitionException {
@@ -381,14 +333,6 @@ public class GlobalParser extends Parser {
 			return getRuleContext(GlobalContext.class,0);
 		}
 		public Label1Context(LabelTypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterLabel1(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitLabel1(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class Label3Context extends LabelTypeContext {
@@ -399,14 +343,6 @@ public class GlobalParser extends Parser {
 			return getRuleContext(GlobalContext.class,0);
 		}
 		public Label3Context(LabelTypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterLabel3(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitLabel3(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class Label2Context extends LabelTypeContext {
@@ -415,14 +351,6 @@ public class GlobalParser extends Parser {
 			return getRuleContext(GlobalContext.class,0);
 		}
 		public Label2Context(LabelTypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterLabel2(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitLabel2(this);
-		}
 	}
 
 	public final LabelTypeContext labelType() throws RecognitionException {
@@ -498,14 +426,6 @@ public class GlobalParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_label; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterLabel(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitLabel(this);
-		}
 	}
 
 	public final LabelContext label() throws RecognitionException {
@@ -536,14 +456,6 @@ public class GlobalParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_participant; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).enterParticipant(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GlobalListener ) ((GlobalListener)listener).exitParticipant(this);
-		}
 	}
 
 	public final ParticipantContext participant() throws RecognitionException {
