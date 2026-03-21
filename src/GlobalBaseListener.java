@@ -76,13 +76,25 @@ public class GlobalBaseListener implements GlobalListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLabelTypeSet(GlobalParser.LabelTypeSetContext ctx) { }
+	@Override public void enterMult(GlobalParser.MultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLabelTypeSet(GlobalParser.LabelTypeSetContext ctx) { }
+	@Override public void exitMult(GlobalParser.MultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingle(GlobalParser.SingleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingle(GlobalParser.SingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

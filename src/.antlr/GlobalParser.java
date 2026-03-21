@@ -241,16 +241,32 @@ public class GlobalParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class LabelTypeSetContext extends ParserRuleContext {
+		public LabelTypeSetContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_labelTypeSet; }
+	 
+		public LabelTypeSetContext() { }
+		public void copyFrom(LabelTypeSetContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MultContext extends LabelTypeSetContext {
 		public List<LabelTypeContext> labelType() {
 			return getRuleContexts(LabelTypeContext.class);
 		}
 		public LabelTypeContext labelType(int i) {
 			return getRuleContext(LabelTypeContext.class,i);
 		}
-		public LabelTypeSetContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public MultContext(LabelTypeSetContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class SingleContext extends LabelTypeSetContext {
+		public LabelTypeContext labelType() {
+			return getRuleContext(LabelTypeContext.class,0);
 		}
-		@Override public int getRuleIndex() { return RULE_labelTypeSet; }
+		public SingleContext(LabelTypeSetContext ctx) { copyFrom(ctx); }
 	}
 
 	public final LabelTypeSetContext labelTypeSet() throws RecognitionException {
@@ -262,6 +278,7 @@ public class GlobalParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__4:
+				_localctx = new MultContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(29);
@@ -290,6 +307,7 @@ public class GlobalParser extends Parser {
 				break;
 			case T__7:
 			case ID:
+				_localctx = new SingleContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(39);

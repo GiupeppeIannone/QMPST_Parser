@@ -1,15 +1,24 @@
+import java.util.List;
+
 import GlobalType.*;;
 
 public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
     @Override
     public GlobalType visitTransmission(GlobalParser.TransmissionContext ctx) {
-        // TODO Auto-generated method stub
-        return super.visitTransmission(ctx);
+        String participant1 = ctx.getChild(0).getText();
+        String participant2 = ctx.getChild(2).getText();
+        BranchesToListVisitor visitor = new BranchesToListVisitor();
+        List<Branch> list = visitor.visit(ctx.getChild(4));
+        Transmission transmission = new Transmission(participant1, participant2, list);
+        return transmission;
     }
     
     @Override
     public GlobalType visitRecursion(GlobalParser.RecursionContext ctx) {
-        Recursion recursion = new Recursion(ctx.getChild(2).toString());
+        String variable = ctx.getChild(1).getText();
+        ParseTreeToAST visitor = new ParseTreeToAST();
+        GlobalType continuation = visitor.visit(ctx.getChild(3));
+        Recursion recursion = new Recursion(variable, continuation);
         return recursion;
     }
     
@@ -25,27 +34,7 @@ public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
         return end;
     }
 
-    @Override
-    public GlobalType visitLabelTypeSet(GlobalParser.LabelTypeSetContext ctx) {
-        // TODO Auto-generated method stub
-        return super.visitLabelTypeSet(ctx);
-    }
+    
 
-    @Override
-    public GlobalType visitLabel1(GlobalParser.Label1Context ctx) {
-        // TODO Auto-generated method stub
-        return super.visitLabel1(ctx);
-    }
-
-    @Override
-    public GlobalType visitLabel2(GlobalParser.Label2Context ctx) {
-        // TODO Auto-generated method stub
-        return super.visitLabel2(ctx);
-    }
-
-    @Override
-    public GlobalType visitLabel3(GlobalParser.Label3Context ctx) {
-        // TODO Auto-generated method stub
-        return super.visitLabel3(ctx);
-    }
+    
 }

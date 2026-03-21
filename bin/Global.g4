@@ -10,8 +10,8 @@ global
     ;
 
 labelTypeSet
-    : '{' labelType (',' labelType)+ '}'
-    | labelType
+    : '{' labelType (',' labelType)+ '}'                                        #Mult
+    | labelType                                                                 #Single
     ;
 
 labelType

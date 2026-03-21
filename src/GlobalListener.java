@@ -65,15 +65,29 @@ public interface GlobalListener extends ParseTreeListener {
 	 */
 	void exitEnd(GlobalParser.EndContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GlobalParser#labelTypeSet}.
+	 * Enter a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
 	 * @param ctx the parse tree
 	 */
-	void enterLabelTypeSet(GlobalParser.LabelTypeSetContext ctx);
+	void enterMult(GlobalParser.MultContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GlobalParser#labelTypeSet}.
+	 * Exit a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
 	 * @param ctx the parse tree
 	 */
-	void exitLabelTypeSet(GlobalParser.LabelTypeSetContext ctx);
+	void exitMult(GlobalParser.MultContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingle(GlobalParser.SingleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingle(GlobalParser.SingleContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Label1}
 	 * labeled alternative in {@link GlobalParser#labelType}.

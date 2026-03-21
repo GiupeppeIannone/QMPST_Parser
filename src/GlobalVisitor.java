@@ -44,11 +44,19 @@ public interface GlobalVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEnd(GlobalParser.EndContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GlobalParser#labelTypeSet}.
+	 * Visit a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLabelTypeSet(GlobalParser.LabelTypeSetContext ctx);
+	T visitMult(GlobalParser.MultContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link GlobalParser#labelTypeSet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingle(GlobalParser.SingleContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Label1}
 	 * labeled alternative in {@link GlobalParser#labelType}.
