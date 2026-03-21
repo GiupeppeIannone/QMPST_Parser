@@ -25,7 +25,7 @@ public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
         return end;
     }
 
-   /*  @Override
+    @Override
     public GlobalType visitLabelTypeSet(GlobalParser.LabelTypeSetContext ctx) {
         // TODO Auto-generated method stub
         return super.visitLabelTypeSet(ctx);
@@ -47,5 +47,5 @@ public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
     public GlobalType visitLabel3(GlobalParser.Label3Context ctx) {
         // TODO Auto-generated method stub
         return super.visitLabel3(ctx);
-    } */
+    }
 }
