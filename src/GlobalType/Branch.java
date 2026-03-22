@@ -10,4 +10,17 @@ public class Branch {
         this.type = type;
         this.continuation = continuation;
     }
+
+    @Override
+    public String toString() {
+        String string = """
+                [
+                    label: %s,
+                    type: %s,
+                    continuation: %s
+                ]
+                """;
+        string = String.format(string, (this.label != null)?this.label:"none", this.type, this.continuation.toString());
+        return string;
+    }
 }

@@ -12,4 +12,21 @@ public class Transmission extends GlobalType {
         this.participant2 = participant2;
         this.branches = branches;
     }
+
+    @Override
+    public String toString() {
+        String string = """
+                {
+                    sender: %s,
+                    receiver: %s,
+                    branches: {%s}
+                }
+                """;
+        String branchesString = "";
+        for (Branch branch : this.branches) {
+            branchesString = branchesString + ",\n" + branch.toString();
+        }
+        string = String.format(string, this.participant1, this.participant2, branchesString);
+        return string;
+    }
 }

@@ -3,6 +3,15 @@ import java.util.List;
 import GlobalType.*;;
 
 public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
+
+    
+
+    @Override
+    public GlobalType visitProg(GlobalParser.ProgContext ctx) {
+        GlobalType global = this.visit(ctx.getChild(0));
+        return global;
+    }
+
     @Override
     public GlobalType visitTransmission(GlobalParser.TransmissionContext ctx) {
         String participant1 = ctx.getChild(0).getText();
@@ -16,8 +25,8 @@ public class ParseTreeToAST extends GlobalBaseVisitor<GlobalType>{
     @Override
     public GlobalType visitRecursion(GlobalParser.RecursionContext ctx) {
         String variable = ctx.getChild(1).getText();
-        ParseTreeToAST visitor = new ParseTreeToAST();
-        GlobalType continuation = visitor.visit(ctx.getChild(3));
+        //ParseTreeToAST visitor = new ParseTreeToAST();
+        GlobalType continuation = this.visit(ctx.getChild(3));
         Recursion recursion = new Recursion(variable, continuation);
         return recursion;
     }
