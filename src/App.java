@@ -1,9 +1,12 @@
+import java.util.Set;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import GlobalType.*;
+import ProjectionAlgorithm.*;
 
 public class App {
     public static void main(String[] args) {
@@ -17,6 +20,12 @@ public class App {
             GlobalType global = visitor.visit(antlrTree);
             //debug, per ora stampa solo l'AST derivato dal parseTree di Antlr
             System.out.print(global.toString());
+            //prova di stampa partecipanti {pt(G)}
+            ASTParticipantVisitor pt = new ASTParticipantVisitor();
+            Set<String> participants = global.accept(pt);
+            for (String string : participants) {
+                System.out.print(string+"\n");
+            }
         }
     }
 

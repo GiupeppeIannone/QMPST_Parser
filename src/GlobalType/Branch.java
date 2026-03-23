@@ -1,6 +1,8 @@
 package GlobalType;
 
-public class Branch {
+import ProjectionAlgorithm.Visitor;
+
+public class Branch implements Visitable{
     public String label;
     public String type;
     public GlobalType continuation;
@@ -20,7 +22,13 @@ public class Branch {
                     continuation: %s
                 ]
                 """;
-        string = String.format(string, (this.label != null)?this.label:"none", this.type, this.continuation.toString());
+        string = String.format(string, (this.label != null) ? this.label : "none", this.type,
+                this.continuation.toString());
         return string;
+    }
+
+    @Override
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visitBranch(this);
     }
 }

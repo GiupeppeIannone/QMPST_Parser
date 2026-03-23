@@ -2,6 +2,8 @@ package GlobalType;
 
 import java.util.List;
 
+import ProjectionAlgorithm.Visitor;
+
 public class Transmission extends GlobalType {
     public String participant1;
     public String participant2;
@@ -29,4 +31,10 @@ public class Transmission extends GlobalType {
         string = String.format(string, this.participant1, this.participant2, branchesString);
         return string;
     }
+
+    @Override
+    public <T> T accept(Visitor<T> visitor) {
+        return visitor.visitTransmission(this);
+    }
+
 }
