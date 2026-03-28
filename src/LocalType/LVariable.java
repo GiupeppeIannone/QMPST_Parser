@@ -8,5 +8,10 @@ public class LVariable extends LocalType {
         this.variable = variable;
     }
 
+    @Override
+    public String toString() {
+        return variable;
+    }
+
 
 }

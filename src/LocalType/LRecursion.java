@@ -10,4 +10,9 @@ public class LRecursion extends LocalType {
         this.continuation = continuation;
     }
 
+    @Override
+    public String toString() {
+        return "μ" + variable + "." + continuation.toString();
+    }
+
 }

@@ -12,4 +12,9 @@ public class LBranch{
         this.continuation = continuation;
     }
 
+    @Override
+    public String toString() {
+        return label + ".(" + type + ")." + continuation.toString();
+    }
+
 }
