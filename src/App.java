@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import GlobalType.*;
+import LocalType.LocalType;
 import ProjectionAlgorithm.*;
 
 public class App {
@@ -18,14 +19,19 @@ public class App {
             ParseTree antlrTree = parser.prog();
             ParseTreeToAST visitor = new ParseTreeToAST();
             GlobalType global = visitor.visit(antlrTree);
-            //debug, per ora stampa solo l'AST derivato dal parseTree di Antlr
-            System.out.print(global.toString());
-            //prova di stampa partecipanti {pt(G)}
+            // debug, per ora stampa solo l'AST derivato dal parseTree di Antlr
+            System.out.print(global.toString() + "\n");
+            // prova di stampa partecipanti {pt(G)}
             ASTParticipantVisitor pt = new ASTParticipantVisitor();
             Set<String> participants = global.accept(pt);
             for (String string : participants) {
-                System.out.print(string+"\n");
+                System.out.print("role of projection " + string + "\n");
+                ProjectionVisitor projectionVisitor = new ProjectionVisitor(string);
+                LocalType projectedType = global.accept(projectionVisitor);
+                String printString = projectedType.toString();
+                System.out.print(printString + "\n");
             }
+            
         }
     }
 

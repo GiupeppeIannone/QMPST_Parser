@@ -14,7 +14,12 @@ public class LBranch{
 
     @Override
     public String toString() {
-        return label + ".(" + type + ")." + continuation.toString();
+        String tmpLabel;
+        if (label == null) {
+            tmpLabel = "";
+        } else tmpLabel = label;
+
+        return tmpLabel + ".(" + type + ")." + continuation.toString();
     }
 
 }

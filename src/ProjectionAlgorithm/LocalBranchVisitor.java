@@ -6,6 +6,7 @@ import GlobalType.Recursion;
 import GlobalType.Transmission;
 import GlobalType.Variable;
 import LocalType.LBranch;
+import LocalType.LocalType;
 
 public class LocalBranchVisitor implements Visitor<LBranch>{
     public String role;
@@ -17,7 +18,8 @@ public class LocalBranchVisitor implements Visitor<LBranch>{
     @Override
     public LBranch visitBranch(Branch branch) {
         ProjectionVisitor projection = new ProjectionVisitor(role);
-        LBranch result = new LBranch(branch.label, branch.type, branch.continuation.accept(projection));
+        LocalType LContinuation = branch.continuation.accept(projection);
+        LBranch result = new LBranch(branch.label, branch.type, LContinuation);
         return result;
     }
 

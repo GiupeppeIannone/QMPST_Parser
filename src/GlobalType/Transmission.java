@@ -19,6 +19,7 @@ public class Transmission extends GlobalType {
     public String toString() {
         String string = """
                 {
+                    form: %s,
                     sender: %s,
                     receiver: %s,
                     branches: {%s}
@@ -28,7 +29,7 @@ public class Transmission extends GlobalType {
         for (Branch branch : this.branches) {
             branchesString = branchesString + ",\n" + branch.toString();
         }
-        string = String.format(string, this.participant1, this.participant2, branchesString);
+        string = String.format(string,this.getClass().getName(), this.participant1, this.participant2, branchesString);
         return string;
     }
 
