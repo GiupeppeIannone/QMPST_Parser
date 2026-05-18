@@ -69,7 +69,7 @@ public class ProjectionVisitor implements Visitor<LocalType> {
                     mappedIBranches.put(branch.label, branch);
                 }
                 Map<String, LBranch> mappedJBranches = new HashMap<>();
-                for (LBranch branch : r1.branches) {
+                for (LBranch branch : r2.branches) {
                     mappedJBranches.put(branch.label, branch);
                 }
                 List<LBranch> resBranches = new ArrayList<>();
@@ -141,11 +141,11 @@ public class ProjectionVisitor implements Visitor<LocalType> {
             //System.out.print(res.toString() + "\n");
             return res;
         } else {
+            /* if (this.role.equals("Rnd")) System.out.print(transmission.branches.toString() + "\n"); */
             LocalType res = transmission.branches.get(0).continuation.accept(this);
             for (int i = 1; i < transmission.branches.size(); i++) {
                 res = fullMerge(res, transmission.branches.get(i).continuation.accept(this));
             }
-            //System.out.print(res.toString() + "\n");
             return res;
         }
     }
