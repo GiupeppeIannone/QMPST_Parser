@@ -1,0 +1,1 @@
+Alice -> Source&(x).CNot(w, x).H(w).r:= meas(w, x).Bob⊕<r>.0

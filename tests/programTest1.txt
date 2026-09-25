@@ -1,0 +1,1 @@
+Alice -> Env&(w).Source&(x).CNot(w, x).H(w).r:= meas(w, x).Bob⊕<r>.0 | Bob -> Source&(y).Alice&(r).σ_{1}(y).Env⊕<y>.0 | Source -> new -q-x. new -q-y.H(x).CNot(x, y).Alice⊕<x>.Bob⊕<y>.0 | Env -> Alice⊕<q>.Bob&(y).0_{y}
