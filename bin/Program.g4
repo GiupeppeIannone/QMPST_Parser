@@ -13,7 +13,7 @@ process
     | 'def' PROCNAME '(' VAR (',' VAR)* ')' '=' process 'in' process                            #Definition
     | PROCNAME '<' expression (',' expression)* '>'                                             #Call
     | unitop                                                                                    #UnitaryOp
-    | '0' ('_' '{' VAR '}')?                                                                    #Inaction
+    | '0' ('_' '{' VAR (',' VAR)* '}')?                                                                    #Inaction
     ;
 
 branch
