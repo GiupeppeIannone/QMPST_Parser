@@ -725,27 +725,56 @@ public class ProgramParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class BranchContext extends ParserRuleContext {
+		public BranchContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_branch; }
+	 
+		public BranchContext() { }
+		public void copyFrom(BranchContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MultContext extends BranchContext {
 		public List<BranchTypeContext> branchType() {
 			return getRuleContexts(BranchTypeContext.class);
 		}
 		public BranchTypeContext branchType(int i) {
 			return getRuleContext(BranchTypeContext.class,i);
 		}
-		public BranchContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_branch; }
+		public MultContext(BranchContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).enterBranch(this);
+			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).enterMult(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).exitBranch(this);
+			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).exitMult(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProgramVisitor ) return ((ProgramVisitor<? extends T>)visitor).visitBranch(this);
+			if ( visitor instanceof ProgramVisitor ) return ((ProgramVisitor<? extends T>)visitor).visitMult(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class SingleContext extends BranchContext {
+		public BranchTypeContext branchType() {
+			return getRuleContext(BranchTypeContext.class,0);
+		}
+		public SingleContext(BranchContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).enterSingle(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ProgramListener ) ((ProgramListener)listener).exitSingle(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ProgramVisitor ) return ((ProgramVisitor<? extends T>)visitor).visitSingle(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -759,6 +788,7 @@ public class ProgramParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__21:
+				_localctx = new MultContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(128);
@@ -787,6 +817,7 @@ public class ProgramParser extends Parser {
 				break;
 			case T__8:
 			case ID:
+				_localctx = new SingleContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(138);

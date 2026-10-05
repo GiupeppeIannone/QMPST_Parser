@@ -85,11 +85,19 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInaction(ProgramParser.InactionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgramParser#branch}.
+	 * Visit a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link ProgramParser#branch}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBranch(ProgramParser.BranchContext ctx);
+	T visitMult(ProgramParser.MultContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link ProgramParser#branch}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingle(ProgramParser.SingleContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code BranchLabel1}
 	 * labeled alternative in {@link ProgramParser#branchType}.

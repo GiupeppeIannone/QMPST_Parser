@@ -135,15 +135,29 @@ public interface ProgramListener extends ParseTreeListener {
 	 */
 	void exitInaction(ProgramParser.InactionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProgramParser#branch}.
+	 * Enter a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link ProgramParser#branch}.
 	 * @param ctx the parse tree
 	 */
-	void enterBranch(ProgramParser.BranchContext ctx);
+	void enterMult(ProgramParser.MultContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProgramParser#branch}.
+	 * Exit a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link ProgramParser#branch}.
 	 * @param ctx the parse tree
 	 */
-	void exitBranch(ProgramParser.BranchContext ctx);
+	void exitMult(ProgramParser.MultContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link ProgramParser#branch}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingle(ProgramParser.SingleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Single}
+	 * labeled alternative in {@link ProgramParser#branch}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingle(ProgramParser.SingleContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BranchLabel1}
 	 * labeled alternative in {@link ProgramParser#branchType}.

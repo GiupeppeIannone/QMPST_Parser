@@ -10,4 +10,15 @@ public class Measurement extends ProgramType {
         this.measuredVars = measuredVarStrings;
         this.continuation = continuationType;
     }
+
+    @Override
+    public String toString() {
+        String retString = "procType: Meas; LHSVar: " + this.variable + "; RHSVars: ";
+        for (String string : measuredVars) {
+            retString += string + "; ";
+        }
+        retString += "Continuation: {" + this.continuation.toString() + "}";
+        return retString;
+    }
+    
 }

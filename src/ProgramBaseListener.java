@@ -148,13 +148,25 @@ public class ProgramBaseListener implements ProgramListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBranch(ProgramParser.BranchContext ctx) { }
+	@Override public void enterMult(ProgramParser.MultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBranch(ProgramParser.BranchContext ctx) { }
+	@Override public void exitMult(ProgramParser.MultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingle(ProgramParser.SingleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingle(ProgramParser.SingleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

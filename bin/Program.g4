@@ -17,8 +17,8 @@ process
     ;
 
 branch
-    : '{' branchType (',' branchType)+ '}'
-    | branchType
+    : '{' branchType (',' branchType)+ '}'                                                      #Mult
+    | branchType                                                                                #Single
     ;
 
 branchType

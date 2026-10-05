@@ -11,4 +11,10 @@ public class Conditional extends ProgramType {
         this.optionB = optionB;
     }
 
+    @Override
+    public String toString() {
+        return "procType: Conditional; expression: " + expression + "; optionA: {" + optionA.toString() + "}; optionB: {" + optionB.toString() + "}";
+    }
+
+    
 }

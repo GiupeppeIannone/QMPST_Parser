@@ -5,8 +5,17 @@ public class Generation extends ProgramType {
     public ProgramType continuation;
 
 
-    Generation(String variableString, ProgramType continuationType){
+    public Generation(String variableString, ProgramType continuationType){
         this.variable = variableString;
         this.continuation = continuationType;
     }
+
+
+    @Override
+    public String toString() {
+        String retString = "procType: Generation; Variable: " + this.variable + " continuation:{" + this.continuation.toString() + "}";
+        return retString;
+    }
+
+    
 }

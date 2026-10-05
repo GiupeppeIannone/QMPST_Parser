@@ -582,16 +582,32 @@ public class ProgramParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class BranchContext extends ParserRuleContext {
+		public BranchContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_branch; }
+	 
+		public BranchContext() { }
+		public void copyFrom(BranchContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MultContext extends BranchContext {
 		public List<BranchTypeContext> branchType() {
 			return getRuleContexts(BranchTypeContext.class);
 		}
 		public BranchTypeContext branchType(int i) {
 			return getRuleContext(BranchTypeContext.class,i);
 		}
-		public BranchContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
+		public MultContext(BranchContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class SingleContext extends BranchContext {
+		public BranchTypeContext branchType() {
+			return getRuleContext(BranchTypeContext.class,0);
 		}
-		@Override public int getRuleIndex() { return RULE_branch; }
+		public SingleContext(BranchContext ctx) { copyFrom(ctx); }
 	}
 
 	public final BranchContext branch() throws RecognitionException {
@@ -603,6 +619,7 @@ public class ProgramParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__21:
+				_localctx = new MultContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(128);
@@ -631,6 +648,7 @@ public class ProgramParser extends Parser {
 				break;
 			case T__8:
 			case ID:
+				_localctx = new SingleContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(138);
