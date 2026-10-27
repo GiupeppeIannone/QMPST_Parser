@@ -1,13 +1,14 @@
 package LocalType;
 
-import java.util.Set;
+import java.util.Map;
+
 
 
 public class Receive extends LocalType {
     public String participant;
-    public Set<LBranch> branches;
+    public Map<String, LBranch> branches;
 
-    public Receive(String participant, Set<LBranch> branches) {
+    public Receive(String participant, Map<String, LBranch> branches) {
         this.participant = participant;
         this.branches = branches;
     }
@@ -15,8 +16,8 @@ public class Receive extends LocalType {
     @Override
     public String toString() {
         String resultString = "";
-        for (LBranch lBranch : branches) {
-            resultString += lBranch.toString() + ", ";
+        for (String lBranch : branches.keySet()) {
+            resultString += branches.get(lBranch).toString() + ", ";
         }
 
         return participant + "&" + "{" + resultString + "}";

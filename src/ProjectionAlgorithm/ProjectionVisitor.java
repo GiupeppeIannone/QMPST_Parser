@@ -1,7 +1,6 @@
 package ProjectionAlgorithm;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,17 +41,14 @@ public class ProjectionVisitor implements Visitor<LocalType> {
         // Merge(Send, Send)
         if (t1 instanceof Send r1 && t2 instanceof Send r2) {
             if (r1.participant.equals(r2.participant)) {
-                if (r1.branches.size() == r2.branches.size()) { // TODO: migliorare la guardia, o fai check interni per
-                                                                // verificare che si tratti dello stesso indexSet
-                    Set<LBranch> mergedCont = new HashSet<>();
-                    for (LBranch extBranch : r1.branches) { // TODO: provare a fare prima mapping per ridurre costo
-                                                            // temporale
-                        for (LBranch intBranch : r2.branches) {
-                            if (extBranch.label == intBranch.label && extBranch.type == intBranch.type) {
-                                LBranch tmpBranch = new LBranch(extBranch.label, extBranch.type,
-                                        fullMerge(extBranch.continuation, intBranch.continuation));
-                                mergedCont.add(tmpBranch);
-                            }
+                if (r1.branches.keySet().equals(r2.branches.keySet())) {
+                    Map<String, LBranch> mergedCont = new HashMap<>();
+                    for (String branchKey : r1.branches.keySet()) {
+                        if (r1.branches.get(branchKey).type.equals(r2.branches.get(branchKey).type)) {
+                            LBranch tmp = new LBranch(r1.branches.get(branchKey).label, r1.branches.get(branchKey).type,
+                                    fullMerge(r1.branches.get(branchKey).continuation,
+                                            r1.branches.get(branchKey).continuation));
+                            mergedCont.put(branchKey, tmp);
                         }
                     }
                     Send res = new Send(r1.participant, mergedCont);
@@ -63,26 +59,18 @@ public class ProjectionVisitor implements Visitor<LocalType> {
         // Merge(&, &)
         if (t1 instanceof Receive r1 && t2 instanceof Receive r2) {
             if (r1.participant.equals(r2.participant)) {
-                Map<String, LBranch> mappedIBranches = new HashMap<>();
-                for (LBranch branch : r1.branches) {
-                    mappedIBranches.put(branch.label, branch);
-                }
-                Map<String, LBranch> mappedJBranches = new HashMap<>();
-                for (LBranch branch : r2.branches) {
-                    mappedJBranches.put(branch.label, branch);
-                }
-                Set<LBranch> resBranches = new HashSet<>();
-                for (Map.Entry<String, LBranch> extMap : mappedIBranches.entrySet()) {
-                    if (mappedJBranches.containsKey(extMap.getKey())) {
-                        resBranches.add(new LBranch(extMap.getValue().label, extMap.getValue().type, fullMerge(
-                                extMap.getValue().continuation, mappedJBranches.get(extMap.getKey()).continuation)));
+                Map<String, LBranch> resBranches = new HashMap<>();
+                for (Map.Entry<String, LBranch> extMap : r1.branches.entrySet()) {
+                    if (r2.branches.containsKey(extMap.getKey())) {
+                        resBranches.put(extMap.getValue().label, new LBranch(extMap.getValue().label, extMap.getValue().type, fullMerge(
+                                extMap.getValue().continuation, r2.branches.get(extMap.getKey()).continuation)));
                     } else {
-                        resBranches.add(extMap.getValue());
+                        resBranches.put(extMap.getKey(), extMap.getValue());
                     }
                 }
-                for (Map.Entry<String, LBranch> extMap : mappedJBranches.entrySet()) {
-                    if (!mappedIBranches.containsKey(extMap.getKey())) {
-                        resBranches.add(extMap.getValue());
+                for (Map.Entry<String, LBranch> extMap : r2.branches.entrySet()) {
+                    if (!r1.branches.containsKey(extMap.getKey())) {
+                        resBranches.put(extMap.getKey(), extMap.getValue());
                     }
                 }
                 Receive res = new Receive(r1.participant, resBranches);
@@ -122,16 +110,16 @@ public class ProjectionVisitor implements Visitor<LocalType> {
     @Override
     public LocalType visitTransmission(Transmission transmission) {
         if (transmission.participant1.equals(this.role)) {
-            Set<LBranch> resLBranch = new HashSet<>();
+            Map<String, LBranch> resLBranch = new HashMap<>();
             for (Branch branch : transmission.branches) {
-                resLBranch.add(new LBranch(branch.label, branch.type, branch.continuation.accept(this)));
+                resLBranch.put(branch.label, new LBranch(branch.label, branch.type, branch.continuation.accept(this)));
             }
             Send res = new Send(transmission.participant2, resLBranch);
             return res;
         } else if (transmission.participant2.equals(this.role)) {
-            Set<LBranch> resLBranch = new HashSet<>();
+            Map<String, LBranch> resLBranch = new HashMap<>();
             for (Branch branch : transmission.branches) {
-                resLBranch.add(new LBranch(branch.label, branch.type, branch.continuation.accept(this)));
+                resLBranch.put(branch.label, new LBranch(branch.label, branch.type, branch.continuation.accept(this)));
             }
             Receive res = new Receive(transmission.participant1, resLBranch);
             return res;
@@ -147,7 +135,6 @@ public class ProjectionVisitor implements Visitor<LocalType> {
     @Override
     public LocalType visitVariable(Variable variable) {
         LVariable var = new LVariable(variable.variable);
-        //System.out.print(var.toString() + "\n");
         return var;
     }
 
