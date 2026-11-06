@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.Map;
 
 import ProgramType.*;
 
@@ -16,7 +16,7 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
     public ProgramType visitBranching(ProgramParser.BranchingContext ctx) {
         programBranchVisitor visitor = new programBranchVisitor();
         String participant = ctx.participant().getText();
-        List<ProgBranch> branchesList = visitor.visit(ctx.branch());
+        Map<String, ProgBranch> branchesList = visitor.visit(ctx.branch());
         Branching ret = new Branching(participant, branchesList);
         return ret;
     }

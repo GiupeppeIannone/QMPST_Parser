@@ -10,7 +10,7 @@ public class Selection extends ProgramType{
 
     public Selection(String participantString, String labelString, String[] expressionString, ProgramType continuationType){
         this.participant = participantString;
-        this.label = labelString;
+        this.label = (labelString != null) ? labelString : "NNONE";
         this.expression = expressionString;
         this.continuation = continuationType;
     }

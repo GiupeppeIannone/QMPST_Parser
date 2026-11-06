@@ -8,7 +8,7 @@ public class ProgBranch {
     public ProgramType continuation;
     
     public ProgBranch(String label, String[] vars, ProgramType continuation) {
-        this.label = label;
+        this.label = (label != null) ? label : "NNONE";
         this.vars = vars;
         this.continuation = continuation;
     }

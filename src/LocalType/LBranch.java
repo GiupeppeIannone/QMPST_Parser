@@ -7,7 +7,7 @@ public class LBranch{
     public LocalType continuation;
 
     public LBranch(String label, String type, LocalType continuation) {
-        this.label = label;
+        this.label = (label != null) ? label : "NNONE";
         this.type = type;
         this.continuation = continuation;
     }

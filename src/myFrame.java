@@ -1,10 +1,7 @@
-package GUI;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-//import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +9,16 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
+
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import TypeChecker.TypeChecker;
+import GlobalType.*;
+import ProgramType.ProgramType;
 
 import javax.swing.*;
 
@@ -22,11 +29,11 @@ public class myFrame extends JFrame implements ActionListener {
     JMenu helpMenu;
     JMenuItem saveItem, loadGlobalItem, loadSystemItem;
     JPanel inputHelperPanel, inputPanel, inputSubPanel1, inputSubPanel2, outputPanel;
-    JButton recButton, sndButton, rcvButton, pauliButton, calculationButton;
+    JButton recButton, sndButton, rcvButton, pauliButton;
     JTextField globalTypeField, systemsField;
     JLabel outputLabel;
 
-    JButton debugGlobalButton, debugSystemButton;
+    JButton debugGlobalButton, debugSystemButton, calculationButton;
 
     public myFrame() {
 
@@ -92,6 +99,7 @@ public class myFrame extends JFrame implements ActionListener {
         calculationButton = new JButton("CHECK");
         debugGlobalButton = new JButton("GLOBAL");
         debugSystemButton = new JButton("SYSTEM");
+        calculationButton.addActionListener(this);
         debugGlobalButton.addActionListener(this);
         debugSystemButton.addActionListener(this);
         outputPanel.add(calculationButton);
@@ -163,12 +171,66 @@ public class myFrame extends JFrame implements ActionListener {
             }
         }
         else if (e.getSource() == debugGlobalButton) {
-            
+            GlobalParser globalParser = getGlobalParser(globalTypeField.getText());
+            ParseTree antlrGlobalTree = globalParser.prog();
+            ParseTreeToAST globalVisitor = new ParseTreeToAST();
+            GlobalType global = globalVisitor.visit(antlrGlobalTree);
+            System.out.print(global.toString() + "\n");
         }
         else if (e.getSource() == debugSystemButton) {
-            
+            ProgramParser programParser = getProgramParser(systemsField.getText());
+            ParseTree antlrProgramTree = programParser.prog();
+            SystemToAST programVisitor = new SystemToAST();
+            Map<String, ProgramType> systemsMap = programVisitor.visit(antlrProgramTree);
+            for (String keyString : systemsMap.keySet()) {
+                System.out.print("Participant: " + keyString + " -> " + systemsMap.get(keyString).toString() + "; \n\n");
+            }
+        }
+        else if (e.getSource() == calculationButton) {
+            GlobalParser globalParser = getGlobalParser(globalTypeField.getText());
+            ParseTree antlrGlobalTree = globalParser.prog();
+            ParseTreeToAST globalVisitor = new ParseTreeToAST();
+            GlobalType global = globalVisitor.visit(antlrGlobalTree);
+            ProgramParser programParser = getProgramParser(systemsField.getText());
+            ParseTree antlrProgramTree = programParser.prog();
+            SystemToAST programVisitor = new SystemToAST();
+            Map<String, ProgramType> systemsMap = programVisitor.visit(antlrProgramTree);
+            TypeChecker typeChecker = new TypeChecker(global, systemsMap);
+            if (typeChecker.check()) {
+                System.out.println("tipo verificato");
+                outputLabel.setText("il tipaggio è corretto");
+            } else {
+                System.out.println("ERRORE");
+                outputLabel.setText("il tipaggio è ERRATO");
+            }
         }
         else throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
+
+    private static GlobalParser getGlobalParser(String input) {
+        GlobalParser parser = null;
+        try {
+            CharStream inputStream = CharStreams.fromString(input);
+            GlobalLexer lexer = new GlobalLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            parser = new GlobalParser(tokens);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parser;
+    }
+
+    private static ProgramParser getProgramParser(String input) {
+        ProgramParser parser = null;
+        try {
+            CharStream inputStream = CharStreams.fromString(input);
+            ProgramLexer lexer = new ProgramLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            parser = new ProgramParser(tokens);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parser;
     }
 
 }

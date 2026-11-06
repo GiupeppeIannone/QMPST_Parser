@@ -8,7 +8,7 @@ public class Branch implements Visitable{
     public GlobalType continuation;
 
     public Branch(String label, String type, GlobalType continuation) {
-        this.label = label;
+        this.label = (label != null) ? label : "NNONE";
         this.type = type;
         this.continuation = continuation;
     }
