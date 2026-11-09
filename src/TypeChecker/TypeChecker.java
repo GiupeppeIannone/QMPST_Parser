@@ -177,7 +177,7 @@ public class TypeChecker {
          * if (localType instanceof Send r1 && programType instanceof Conditional r2) {
          * boolean ret = true;
          * ret = ret && checkVar("bit", r2.expression, gamma, delta)
-         * //FIXME: dividere r1 in due localtype diversi da checkare
+         * // dividere r1 in due localtype diversi da checkare
          * && checkParticipant(r1, r2.optionA, gamma, delta, theta)
          * && checkParticipant(r1, r2.optionB, gamma, delta, theta);
          * return ret;

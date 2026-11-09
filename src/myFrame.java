@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.CharStream;
@@ -35,7 +37,17 @@ public class myFrame extends JFrame implements ActionListener {
 
     JButton debugGlobalButton, debugSystemButton, calculationButton;
 
+    JPanel inputSubPanel3;
+    JLabel addedGammaVars, addedDeltaVars;
+    JTextField initGammaVarField, initGammaTypeField, initDeltaField;
+    JButton addGamma, addDelta;
+
+    Map<String, String> initialGamma, initialDelta;
+
     public myFrame() {
+
+        initialGamma = new HashMap<>();
+        initialDelta = new HashMap<>();
 
         // Menubar Inizialization
         menubar = new JMenuBar();
@@ -70,10 +82,16 @@ public class myFrame extends JFrame implements ActionListener {
         inputPanel = new JPanel();
         inputSubPanel1 = new JPanel();
         inputSubPanel2 = new JPanel();
+        inputSubPanel3 = new JPanel();
         inputPanel.add(inputSubPanel1);
         inputPanel.add(inputSubPanel2);
-        inputPanel.setLayout(new GridLayout(2, 1));
-        // inputSubPanel1.setLayout(new GridLayout(2, 1));
+        inputPanel.add(inputSubPanel3);
+        inputPanel.setLayout(new GridLayout(3, 1));
+        inputSubPanel3.setLayout(new GridLayout(2, 1));
+        JPanel gammaSubPanel = new JPanel(new GridLayout(1, 3));
+        JPanel deltaSubPanel = new JPanel(new GridLayout(1, 4));
+        inputSubPanel3.add(gammaSubPanel);
+        inputSubPanel3.add(deltaSubPanel);
         // inputSubPanel2.setLayout(new GridLayout(2, 1));
         JTextArea title1 = new JTextArea();
         JTextArea title2 = new JTextArea();
@@ -85,12 +103,31 @@ public class myFrame extends JFrame implements ActionListener {
         title2.setText("Inserisci il Sistema Multiparte:");
         globalTypeField = new JTextField();
         systemsField = new JTextField();
+        initGammaVarField = new JTextField();
+        initGammaTypeField = new JTextField();
+        initDeltaField = new JTextField();
         globalTypeField.setPreferredSize(new Dimension(350, 100));
         systemsField.setPreferredSize(new Dimension(350, 100));
+        initGammaVarField.setPreferredSize(new Dimension(100, 30));
+        initGammaTypeField.setPreferredSize(new Dimension(100, 30));
+        initDeltaField.setPreferredSize(new Dimension(100, 30));
+        addGamma = new JButton("Aggiungi variabile");
+        addDelta = new JButton("Aggiungi riferimento");
+        addGamma.addActionListener(this);
+        addDelta.addActionListener(this);
+        addedGammaVars = new JLabel("\u0393 :");
+        addedDeltaVars = new JLabel("\u0394 :");
         inputSubPanel1.add(title1);
         inputSubPanel1.add(globalTypeField);
         inputSubPanel2.add(title2);
         inputSubPanel2.add(systemsField);
+        gammaSubPanel.add(addedGammaVars);
+        gammaSubPanel.add(initGammaVarField);
+        gammaSubPanel.add(initGammaTypeField);
+        gammaSubPanel.add(addGamma);
+        deltaSubPanel.add(addedDeltaVars);
+        deltaSubPanel.add(initDeltaField);
+        deltaSubPanel.add(addDelta);
 
         outputPanel = new JPanel();
         outputPanel.setLayout(new FlowLayout());
@@ -110,6 +147,7 @@ public class myFrame extends JFrame implements ActionListener {
         outputPanel.setPreferredSize(new Dimension(200, 200));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("QMPST Typing Check Tool");
         this.setSize(500, 400);
         this.setLayout(new BorderLayout());
         this.setJMenuBar(menubar);
@@ -203,6 +241,42 @@ public class myFrame extends JFrame implements ActionListener {
                 System.out.println("ERRORE");
                 outputLabel.setText("il tipaggio è ERRATO");
             }
+        }
+        else if (e.getSource() == addGamma) {
+            if (initGammaVarField.getText().isEmpty()) {
+                outputLabel.setText("Inserire un nome di variabile");
+                return; 
+            }
+            if (initGammaTypeField.getText().isEmpty() || !(List.of("bit", "unit", "int").contains(initGammaTypeField.getText()))) {
+                System.out.println(initGammaTypeField.getText());
+                outputLabel.setText("Inserire un tipo di variabile valido");
+                return;
+            }
+            if (initialGamma.containsKey(initGammaVarField.getText())) {
+                outputLabel.setText("Il nome della variabile è già usata in Gamma");
+                return;
+            }
+            initialGamma.put(initGammaVarField.getText(), initGammaTypeField.getText());
+            addedGammaVars.setText(addedGammaVars.getText() + " " + initGammaVarField.getText() + ":" + initGammaTypeField.getText() + ";");
+            initGammaVarField.setText("");
+            initGammaTypeField.setText("");
+        }
+        else if (e.getSource() == addDelta) {
+            if (initDeltaField.getText().isEmpty()) {
+                outputLabel.setText("Inserire un nome di variabile");
+                return;
+            }
+            if (initialDelta.containsKey(initDeltaField.getText())) {
+                outputLabel.setText("Variabile già presente in Delta");
+                return;
+            }
+            if (!initDeltaField.getText().matches("-q-[a-z]")) {
+                outputLabel.setText("la variabile in Delta ha bisogno del suffisso -q-");
+                return;
+            }
+            initialDelta.put(initDeltaField.getText(), "qbit");
+            addedDeltaVars.setText(addedDeltaVars.getText() + " " + initDeltaField.getText() + ":" + "qbit;" );
+            initDeltaField.setText("");
         }
         else throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
