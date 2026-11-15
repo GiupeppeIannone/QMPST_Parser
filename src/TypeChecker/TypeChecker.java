@@ -1,5 +1,6 @@
 package TypeChecker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.List;
 import GlobalType.GlobalType;
 import LocalType.LEnd;
 import LocalType.LRecursion;
+import LocalType.LVariable;
 import LocalType.LocalType;
 import LocalType.Receive;
 import LocalType.Send;
@@ -33,6 +35,7 @@ public class TypeChecker {
     public GlobalType globalType;
     public Map<String, ProgramType> programTypeMap;
     public Map<String, LocalType> localTypesMap;
+    public Map<String, LocalType> aliases;
 
     /*
      * private Map<String, String> Gamma = new HashMap<>();
@@ -55,6 +58,7 @@ public class TypeChecker {
                 localTypesMap.put(string, projectedType);
             }
         }
+        this.aliases = new HashMap<>();
     }
 
     public boolean check() {
@@ -66,7 +70,7 @@ public class TypeChecker {
             return false;
         }
         for (String participantString : localTypesMap.keySet()) {
-            if (participantString.equals("Env")) continue;
+            //if (participantString.equals("Env")) continue;
             ret = ret && this.checkParticipant(localTypesMap.get(participantString),
                     programTypeMap.get(participantString), new HashMap<>(), new HashMap<>(), new HashMap<>());
             if (!ret) {
@@ -114,10 +118,11 @@ public class TypeChecker {
         // Regola T-Send
         // TODO: cerca un modo migliore di memorizzare expression in Selection
         if (localType instanceof Send r1 && programType instanceof Selection r2) {
-            boolean ret;
+            boolean ret = true;
             if (r1.participant.equals(r2.participant)) {
                 if (r1.branches.keySet().contains(r2.label)) {
-                    ret = checkVar(r1.branches.get(r2.label).type, r2.expression[0], gamma, delta);
+                    if (!(r2.expression.length == 1 && r2.expression[0].equals("unit")))
+                        ret = checkVar(r1.branches.get(r2.label).type, r2.expression[0], gamma, delta);
                     if (r1.branches.get(r2.label).type.equals("qbit"))
                         delta.remove(r2.expression[0]);
                     ret = ret
@@ -163,7 +168,9 @@ public class TypeChecker {
                     ret = ret && checkParticipant(r1.branches.get(keyString).continuation,
                             r2.branches.get(keyString).continuation, gamma, delta, theta);
                 } else {
-                    gamma.put(r2.branches.get(keyString).vars[0], r1.branches.get(keyString).type);
+                    if (!(r2.branches.get(keyString).vars.length == 1 && r2.branches.get(keyString).vars[0] == "unit")) {
+                        gamma.put(r2.branches.get(keyString).vars[0], r1.branches.get(keyString).type);
+                    }
                     ret = ret && checkParticipant(r1.branches.get(keyString).continuation,
                             r2.branches.get(keyString).continuation, gamma, delta, theta);
                 }
@@ -184,20 +191,53 @@ public class TypeChecker {
          * }
          */
 
-        // TODO: Implementare le regole T-def, T-Call
+        
         // Regola T-def
         if (localType instanceof LRecursion r1 && programType instanceof Definition r2) {
-
+            boolean ret = true;
+            Map<String, String> gamma1 = new HashMap<>();
+            Map<String, String> delta1 = new HashMap<>();
+            gamma1.putAll(gamma);
+            List<String> types = new ArrayList<>();
+            for (String arg : r2.classicalArguments) {
+                gamma1.put(arg, "bit");
+                types.add("bit");
+            }
+            for (String arg : r2.linearArguments) {
+                delta1.put(arg, "qbit");
+                types.add("qbit");
+            }
+            theta.put(r2.procName, new ThetaEntry(types, r2.expectedType));
+            aliases.put(r1.variable, r1.continuation);
+            ret = ret && checkParticipant(r2.expectedType, r2.proc, gamma1, delta1, theta);
+            ret = ret && checkParticipant(r1.continuation, r2.prog, gamma, delta, theta);
+            return ret;
         }
 
         // Regola T-CALL
         if (programType instanceof Call r1) {
             if (!theta.containsKey(r1.procName)) {
                 System.err.println(r1.procName + "non è definito");
+                return false;
             }
-            if (!theta.get(r1.procName).returnType().equals(localType)) { // FIXME: non basta equals, placeholder
-                                                                          // momentaneo
+            LocalType local = localType;
+            if (localType instanceof LVariable r2) {
+                String tmpVar = r2.variable.substring(1);
+                if (aliases.containsKey(tmpVar)) {
+                    local = aliases.get(tmpVar);
+                }
+            }
 
+            if (LocalTypeComparator.equivalent(theta.get(r1.procName).returnType(), local)) {
+                if (r1.arguments.length != theta.get(r1.procName).types().size()) return false;
+                
+                boolean ret = true;
+                for (int i = 0; i < theta.get(r1.procName).types().size(); i++) {
+                    ret = ret && checkVar(theta.get(r1.procName).types().get(i), r1.arguments[i], gamma, delta);
+                }
+                return ret;
+            } else {
+                return false;
             }
         }
 

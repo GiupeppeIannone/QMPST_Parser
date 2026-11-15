@@ -85,6 +85,12 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInaction(ProgramParser.InactionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProgramParser#varList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarList(ProgramParser.VarListContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Mult}
 	 * labeled alternative in {@link ProgramParser#branch}.
 	 * @param ctx the parse tree
@@ -120,6 +126,18 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBranchLabel3(ProgramParser.BranchLabel3Context ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProgramParser#label}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel(ProgramParser.LabelContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProgramParser#participant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParticipant(ProgramParser.ParticipantContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProgramParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -147,15 +165,73 @@ public interface ProgramVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPauliTransformation(ProgramParser.PauliTransformationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgramParser#label}.
+	 * Visit a parse tree produced by the {@code Receive}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLabel(ProgramParser.LabelContext ctx);
+	T visitReceive(ProgramParser.ReceiveContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProgramParser#participant}.
+	 * Visit a parse tree produced by the {@code Send}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParticipant(ProgramParser.ParticipantContext ctx);
+	T visitSend(ProgramParser.SendContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Recursion}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRecursion(ProgramParser.RecursionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Variable}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(ProgramParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code End}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnd(ProgramParser.EndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Multiple}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiple(ProgramParser.MultipleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SingleChoice}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSingleChoice(ProgramParser.SingleChoiceContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Label1}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel1(ProgramParser.Label1Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Label2}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel2(ProgramParser.Label2Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Label3}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel3(ProgramParser.Label3Context ctx);
 }

@@ -34,7 +34,8 @@ public class programBranchTypeVisitor extends ProgramBaseVisitor<ProgBranch>{
     @Override
     public ProgBranch visitBranchLabel3(ProgramParser.BranchLabel3Context ctx) {
         String labelString = ctx.label().getText();
-        String[] vars = null;
+        String[] vars = new String[1];
+        vars[0] = "unit";
         ProcessToAST visitor = new ProcessToAST();
         ProgramType continuation = visitor.visit(ctx.process());
         ProgBranch ret = new ProgBranch(labelString, vars, continuation);

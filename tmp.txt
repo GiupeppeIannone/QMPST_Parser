@@ -1,0 +1,21 @@
+Alice->def X(<x, s, y>,<>) = if 1 then new q.if 1 then σ1(q).if 1 then H(q).Bob⊕data<q>.X<x,s,y> else Bob⊕data<q>.X<x,s,y> else Bob⊕data<q>.X<x,s,y> else Bob⊕stop.Bob&(g).Bob⊕<x,y>.0 : μt.Bob⊕{data(qbit).t , stop.Bob&(bit).Bob⊕(bit).end} in X<x,s,s> | Bob -> 
+
+
+muT.Rnd&(bit).Alice&{
+    data(qbit).Rnd+loop.Env+notYet.t,
+    stop.Rnd+stop.Alice+(bit).Env{
+        notVerified.0,
+        verified.0
+    }
+}
+?t.Rnd&{NNONE.(bit).Alice&{data.(qbit).Rnd?{loop.(unit).Env?{notYet.(unit).t, }, }, stop.(unit).Rnd?{stop.(unit).Alice?{NNONE.(bit).Alice&{NNONE.(bit).Env?{notVerified.(unit).end, verified.(unit).end, }, }, }, }, }, }
+
+
+
+
+
+
+IMPORTANTE:
+Alice -> def X (<t>,<>) = if t then new q.Bob⊕data<q>.X<t-1> else Bob⊕stop.Bob&(r).Bob⊕(t, r).0 : μt.Bob⊕{data(qbit).t, stop.Bob⊕(bit).end} in X<1> | Bob -> Def X(<z>,<>) = Rnd&(y).Alice&{data(x).y:=meas(x).Rnd⊕loop.Env⊕notYet.X<z>, stop.Rnd⊕stop.Alice⊕<z>.if z then Env⊕verified.0 else Env⊕notVerified.0 : μt.Rnd&(bit).Alice&{data(qbit).Rnd⊕loop.t, stop.Rnd⊕stop.Alice⊕(bit).Alice&(bit).Env⊕{verified.end, notVerified.end} | Rnd -> def X(<>,<>) = new x.H(x).r:=meas(x).Bob⊕<r>.Bob&{loop.X<>, stop.0} : μt.Bob⊕(bit).Bob&{loop.t, stop.end} in X<> | Env -> def X(<>,<>) = Bob&{notYet.X<>, verified.0, notVerified.0} : μt.Bob&{notYet.t, verified.end, notVerified.end} in X<>
+
+Alice -> def X (<t>,<>) = if t then new q.Bob⊕data<q>.X<t-1> else Bob⊕stop.Bob&(r).Bob⊕(t, r).0 : μt.Bob⊕{data(qbit).t, stop.Bob⊕(bit).end} in X<1> | Bob -> Def X(<z>,<>) = Rnd&(y).Alice&{data(x).y:=meas(x).Rnd⊕loop.Env⊕notYet.X<z>, stop.Rnd⊕stop.Alice⊕<z>.if z then Env⊕verified.0 else Env⊕notVerified.0 : μt.Rnd&(bit).Alice&{data(qbit).Rnd⊕loop.t, stop.Rnd⊕stop.Alice⊕(bit).Alice&(bit).Env⊕{verified.end, notVerified.end} | Rnd -> def X(<>,<>) = new x.H(x).r:=meas(x).Bob⊕<r>.Bob&{loop.X<>, stop.0} : μt.Bob⊕(bit).Bob&{loop.t, stop.end} in X<> | Env -> def X(<>,<>) = Bob&{notYet.X<>, verified.0, notVerified.0} : μt.Bob&{notYet.t, verified.end, notVerified.end} in X<>
