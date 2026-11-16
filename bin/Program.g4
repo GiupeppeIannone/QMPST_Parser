@@ -1,20 +1,23 @@
 grammar Program;
+import Local;
 
 prog: multipartySystems ('|' multipartySystems)* EOF;
 
 multipartySystems: participant '-' '>' process;
 
 process
-    : 'new' VAR '.' process                                                                     #QbGeneration
-    | VAR ':' '=' 'meas' '(' VAR (',' VAR)* ')' '.' process                                     #Measurement
-    | participant '&' branch                                                                    #Branching
-    | participant '⊕' label? '<' expression ( ',' expression)* '>' '.' process                  #Selection
-    | 'if' expression 'then' process 'else' process                                             #Conditional
-    | 'def' PROCNAME '(' VAR (',' VAR)* ')' '=' process 'in' process                            #Definition
-    | PROCNAME '<' expression (',' expression)* '>'                                             #Call
-    | unitop                                                                                    #UnitaryOp
-    | '0' ('_' '{' VAR (',' VAR)* '}')?                                                                    #Inaction
+    : 'new' VAR '.' process                                                                                                     #QbGeneration
+    | VAR ':' '=' 'meas' '(' VAR (',' VAR)* ')' '.' process                                                                     #Measurement
+    | participant '&' branch                                                                                                    #Branching
+    | participant '⊕' label? '<' ((expression ( ',' expression)*) | 'unit') '>' '.' process                                                  #Selection
+    | 'if' expression 'then' process 'else' process                                                                             #Conditional
+    | 'def' PROCNAME '(' '<' firstList=varList? '>' ';' '<' qbitList=varList? '>' ')' '=' process ':' local 'in' process        #Definition
+    | PROCNAME '<' ((expression (',' expression)*) | 'null') '>'                                                                             #Call
+    | unitop                                                                                                                    #UnitaryOp
+    | '0' ('_' '{' VAR (',' VAR)* '}')?                                                                                         #Inaction
     ;
+
+varList: VAR (',' VAR)*;
 
 branch
     : '{' branchType (',' branchType)+ '}'                                                      #Mult
@@ -26,11 +29,19 @@ branchType
     | '(' VAR (',' VAR)* ')' '.' process                                                        #BranchLabel2
     | label '.' process                                                                         #BranchLabel3
     ;
+label: ID;
+participant: ID;
 
 expression
-    : VAR
+    : expression '+' expression
+    | expression '-' expression
+    | expression '*' expression
+    | expression '/' expression
+    | expression '%' expression
+    | expression '@' expression
+    | expression 'op' expression
     | CONSTANT
-    | expression OP expression
+    | VAR
     ;
 
 unitop
@@ -42,22 +53,21 @@ unitop
     | 'fst''(' VAR ')' '.' process
     | 'snd''(' VAR ')' '.' process */
     ;
-label: ID;
-participant: ID;
 
 //Tokens
-VAR: ('-q-')? [a-z];
-PAULI: [a-z0-3];
+PAULI: [0-3];
+CONSTANT: [1-9][0-9]*;
+VAR: [a-z];
 PROCNAME: [A-Z];
-OP
-    : '+'
-    | '-'
-    | '*'
-    | '/'
-    | '%'
-    | '@' 
-    | 'op'
+
+BASETYPE
+    : 'bit'
+    | 'qbit'
+    | 'unit'
+    | 'int'
     ;
-CONSTANT: [0-9]+;
+
+TYPEVAR: '_'[a-z];
+END: 'end';
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 WS: [ \t\r\n]+ -> skip;

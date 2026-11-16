@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import LocalType.LocalType;
 import ProgramType.*;
 
 public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
-    
+
     @Override
     public ProgramType visitQbGeneration(ProgramParser.QbGenerationContext ctx) {
         String variable = ctx.VAR().getText();
@@ -11,7 +14,7 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
         Generation retValue = new Generation(variable, cont);
         return retValue;
     }
-    
+
     @Override
     public ProgramType visitBranching(ProgramParser.BranchingContext ctx) {
         programBranchVisitor visitor = new programBranchVisitor();
@@ -56,14 +59,35 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
     @Override
     public ProgramType visitDefinition(ProgramParser.DefinitionContext ctx) {
         String procName = ctx.PROCNAME().getText();
-        int i = ctx.VAR().size();
-        String[] parameters = new String[i];
-        for (int j = 0; j < i; j++) {
-            parameters[j] = ctx.VAR(j).getText();
+        /*
+         * int i = ctx.VAR().size();
+         * String[] parameters = new String[i];
+         * for (int j = 0; j < i; j++) {
+         * parameters[j] = ctx.VAR(j).getText();
+         * }
+         */
+        String[] classicalParameters = new String[0];
+        String[] linearParameters = new String[0];
+        if (ctx.firstList != null) {
+            List<String> tmp = new ArrayList<>();
+            for (int i = 0; i < ctx.firstList.VAR().size(); i++) {
+                tmp.add(ctx.firstList.VAR(i).getText());
+            }
+            classicalParameters = tmp.toArray(new String[0]);
         }
+        if (ctx.qbitList != null) {
+            List<String> tmp = new ArrayList<>();
+            for (int i = 0; i < ctx.qbitList.VAR().size(); i++) {
+                tmp.add(ctx.qbitList.VAR(i).getText());
+            }
+            linearParameters = tmp.toArray(new String[0]);
+        }
+
         ProgramType proc = this.visit(ctx.process(0));
         ProgramType prog = this.visit(ctx.process(1));
-        Definition ret = new Definition(procName, parameters, proc, prog);
+        expectedLocalTypeVisitor visitor = new expectedLocalTypeVisitor();
+        LocalType expLocalType = visitor.visit(ctx.local());
+        Definition ret = new Definition(procName, classicalParameters, linearParameters, proc, prog, expLocalType);
         return ret;
     }
 
@@ -82,13 +106,12 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
         int i = ctx.VAR().size();
         String[] vars = new String[i];
         for (int j = 0; j < i; j++) {
-            //probabilmente necessario controllo della presenza di: "-q-" nei token
+            // probabilmente necessario controllo della presenza di: "-q-" nei token
             vars[j] = ctx.VAR(j).getText();
         }
         Inaction ret = new Inaction(vars);
         return ret;
     }
-
 
     @Override
     public ProgramType visitMeasurement(ProgramParser.MeasurementContext ctx) {
@@ -106,7 +129,7 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
     @Override
     public ProgramType visitPauliTransformation(ProgramParser.PauliTransformationContext ctx) {
         String opType = "σ_{" + ctx.PAULI().getText() + "}";
-        String[] var = new String[1]; 
+        String[] var = new String[1];
         var[0] = ctx.VAR().getText();
         ProgramType cont = this.visit(ctx.process());
         UnitOp ret = new UnitOp(opType, var, cont);
@@ -117,10 +140,16 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
     public ProgramType visitSelection(ProgramParser.SelectionContext ctx) {
         String participantString = ctx.participant().getText();
         String labelString = ctx.label() != null ? ctx.label().getText() : null;
-        int i = ctx.expression().size();
-        String[] expressionArray = new String[i];
-        for (int j = 0; j < i; j++) {
-            expressionArray[j] = ctx.expression(j).getText();
+        String[] expressionArray = null;
+        if (ctx.expression() != null) {
+            int i = ctx.expression().size();
+            expressionArray = new String[i];
+            for (int j = 0; j < i; j++) {
+                expressionArray[j] = ctx.expression(j).getText();
+            }
+        } else {
+            expressionArray = new String[1];
+            expressionArray[1] = "unit";
         }
 
         ProgramType cont = this.visit(ctx.process());
@@ -132,6 +161,5 @@ public class ProcessToAST extends ProgramBaseVisitor<ProgramType> {
     public ProgramType visitUnitaryOp(ProgramParser.UnitaryOpContext ctx) {
         return this.visit(ctx.unitop());
     }
-    
-    
+
 }

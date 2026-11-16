@@ -135,6 +135,16 @@ public interface ProgramListener extends ParseTreeListener {
 	 */
 	void exitInaction(ProgramParser.InactionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProgramParser#varList}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarList(ProgramParser.VarListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgramParser#varList}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarList(ProgramParser.VarListContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Mult}
 	 * labeled alternative in {@link ProgramParser#branch}.
 	 * @param ctx the parse tree
@@ -195,6 +205,26 @@ public interface ProgramListener extends ParseTreeListener {
 	 */
 	void exitBranchLabel3(ProgramParser.BranchLabel3Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProgramParser#label}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabel(ProgramParser.LabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgramParser#label}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabel(ProgramParser.LabelContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProgramParser#participant}.
+	 * @param ctx the parse tree
+	 */
+	void enterParticipant(ProgramParser.ParticipantContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProgramParser#participant}.
+	 * @param ctx the parse tree
+	 */
+	void exitParticipant(ProgramParser.ParticipantContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProgramParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -241,23 +271,123 @@ public interface ProgramListener extends ParseTreeListener {
 	 */
 	void exitPauliTransformation(ProgramParser.PauliTransformationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProgramParser#label}.
+	 * Enter a parse tree produced by the {@code Receive}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 */
-	void enterLabel(ProgramParser.LabelContext ctx);
+	void enterReceive(ProgramParser.ReceiveContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProgramParser#label}.
+	 * Exit a parse tree produced by the {@code Receive}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 */
-	void exitLabel(ProgramParser.LabelContext ctx);
+	void exitReceive(ProgramParser.ReceiveContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProgramParser#participant}.
+	 * Enter a parse tree produced by the {@code Send}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 */
-	void enterParticipant(ProgramParser.ParticipantContext ctx);
+	void enterSend(ProgramParser.SendContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProgramParser#participant}.
+	 * Exit a parse tree produced by the {@code Send}
+	 * labeled alternative in {@link ProgramParser#local}.
 	 * @param ctx the parse tree
 	 */
-	void exitParticipant(ProgramParser.ParticipantContext ctx);
+	void exitSend(ProgramParser.SendContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Recursion}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void enterRecursion(ProgramParser.RecursionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Recursion}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void exitRecursion(ProgramParser.RecursionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Variable}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariable(ProgramParser.VariableContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Variable}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariable(ProgramParser.VariableContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code End}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnd(ProgramParser.EndContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code End}
+	 * labeled alternative in {@link ProgramParser#local}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnd(ProgramParser.EndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Multiple}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiple(ProgramParser.MultipleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Multiple}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiple(ProgramParser.MultipleContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SingleChoice}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingleChoice(ProgramParser.SingleChoiceContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SingleChoice}
+	 * labeled alternative in {@link ProgramParser#labelSet}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingleChoice(ProgramParser.SingleChoiceContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Label1}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabel1(ProgramParser.Label1Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Label1}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabel1(ProgramParser.Label1Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Label2}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabel2(ProgramParser.Label2Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Label2}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabel2(ProgramParser.Label2Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Label3}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabel3(ProgramParser.Label3Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Label3}
+	 * labeled alternative in {@link ProgramParser#labelType}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabel3(ProgramParser.Label3Context ctx);
 }
