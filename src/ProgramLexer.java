@@ -20,8 +20,8 @@ public class ProgramLexer extends Lexer {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, CONSTANT=37, VAR=38, 
-		PAULI=39, PROCNAME=40, BASETYPE=41, TYPEVAR=42, END=43, ID=44, WS=45;
+		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, PAULI=37, CONSTANT=38, 
+		VAR=39, PROCNAME=40, BASETYPE=41, TYPEVAR=42, END=43, ID=44, WS=45;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -36,7 +36,7 @@ public class ProgramLexer extends Lexer {
 			"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
 			"T__17", "T__18", "T__19", "T__20", "T__21", "T__22", "T__23", "T__24", 
 			"T__25", "T__26", "T__27", "T__28", "T__29", "T__30", "T__31", "T__32", 
-			"T__33", "T__34", "T__35", "CONSTANT", "VAR", "PAULI", "PROCNAME", "BASETYPE", 
+			"T__33", "T__34", "T__35", "PAULI", "CONSTANT", "VAR", "PROCNAME", "BASETYPE", 
 			"TYPEVAR", "END", "ID", "WS"
 		};
 	}
@@ -57,7 +57,7 @@ public class ProgramLexer extends Lexer {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "CONSTANT", "VAR", "PAULI", "PROCNAME", "BASETYPE", "TYPEVAR", 
+			null, "PAULI", "CONSTANT", "VAR", "PROCNAME", "BASETYPE", "TYPEVAR", 
 			"END", "ID", "WS"
 		};
 	}
@@ -148,8 +148,8 @@ public class ProgramLexer extends Lexer {
 		"\u001a\u0001\u001a\u0001\u001b\u0001\u001b\u0001\u001c\u0001\u001c\u0001"+
 		"\u001d\u0001\u001d\u0001\u001e\u0001\u001e\u0001\u001f\u0001\u001f\u0001"+
 		"\u001f\u0001 \u0001 \u0001!\u0001!\u0001!\u0001!\u0001!\u0001\"\u0001"+
-		"\"\u0001#\u0001#\u0001$\u0001$\u0005$\u00bf\b$\n$\f$\u00c2\t$\u0001%\u0001"+
-		"%\u0001&\u0001&\u0001\'\u0001\'\u0001(\u0001(\u0001(\u0001(\u0001(\u0001"+
+		"\"\u0001#\u0001#\u0001$\u0001$\u0001%\u0001%\u0005%\u00c1\b%\n%\f%\u00c4"+
+		"\t%\u0001&\u0001&\u0001\'\u0001\'\u0001(\u0001(\u0001(\u0001(\u0001(\u0001"+
 		"(\u0001(\u0001(\u0001(\u0001(\u0001(\u0001(\u0001(\u0001(\u0003(\u00d8"+
 		"\b(\u0001)\u0001)\u0001)\u0001*\u0001*\u0001*\u0001*\u0001+\u0001+\u0005"+
 		"+\u00e3\b+\n+\f+\u00e6\t+\u0001,\u0004,\u00e9\b,\u000b,\f,\u00ea\u0001"+
@@ -158,7 +158,7 @@ public class ProgramLexer extends Lexer {
 		"\f\u0019\r\u001b\u000e\u001d\u000f\u001f\u0010!\u0011#\u0012%\u0013\'"+
 		"\u0014)\u0015+\u0016-\u0017/\u00181\u00193\u001a5\u001b7\u001c9\u001d"+
 		";\u001e=\u001f? A!C\"E#G$I%K&M\'O(Q)S*U+W,Y-\u0001\u0000\b\u0001\u0000"+
-		"19\u0001\u000009\u0001\u0000az\u0002\u000003az\u0001\u0000AZ\u0003\u0000"+
+		"03\u0001\u000019\u0001\u000009\u0001\u0000az\u0001\u0000AZ\u0003\u0000"+
 		"AZ__az\u0004\u000009AZ__az\u0003\u0000\t\n\r\r  \u00f3\u0000\u0001\u0001"+
 		"\u0000\u0000\u0000\u0000\u0003\u0001\u0000\u0000\u0000\u0000\u0005\u0001"+
 		"\u0000\u0000\u0000\u0000\u0007\u0001\u0000\u0000\u0000\u0000\t\u0001\u0000"+
@@ -196,7 +196,7 @@ public class ProgramLexer extends Lexer {
 		"\u00ac\u0001\u0000\u0000\u0000?\u00ae\u0001\u0000\u0000\u0000A\u00b1\u0001"+
 		"\u0000\u0000\u0000C\u00b3\u0001\u0000\u0000\u0000E\u00b8\u0001\u0000\u0000"+
 		"\u0000G\u00ba\u0001\u0000\u0000\u0000I\u00bc\u0001\u0000\u0000\u0000K"+
-		"\u00c3\u0001\u0000\u0000\u0000M\u00c5\u0001\u0000\u0000\u0000O\u00c7\u0001"+
+		"\u00be\u0001\u0000\u0000\u0000M\u00c5\u0001\u0000\u0000\u0000O\u00c7\u0001"+
 		"\u0000\u0000\u0000Q\u00d7\u0001\u0000\u0000\u0000S\u00d9\u0001\u0000\u0000"+
 		"\u0000U\u00dc\u0001\u0000\u0000\u0000W\u00e0\u0001\u0000\u0000\u0000Y"+
 		"\u00e8\u0001\u0000\u0000\u0000[\\\u0005|\u0000\u0000\\\u0002\u0001\u0000"+
@@ -238,11 +238,11 @@ public class ProgramLexer extends Lexer {
 		"\u00b5\u0005N\u0000\u0000\u00b5\u00b6\u0005o\u0000\u0000\u00b6\u00b7\u0005"+
 		"t\u0000\u0000\u00b7D\u0001\u0000\u0000\u0000\u00b8\u00b9\u0005\u03c3\u0000"+
 		"\u0000\u00b9F\u0001\u0000\u0000\u0000\u00ba\u00bb\u0005\u03bc\u0000\u0000"+
-		"\u00bbH\u0001\u0000\u0000\u0000\u00bc\u00c0\u0007\u0000\u0000\u0000\u00bd"+
-		"\u00bf\u0007\u0001\u0000\u0000\u00be\u00bd\u0001\u0000\u0000\u0000\u00bf"+
-		"\u00c2\u0001\u0000\u0000\u0000\u00c0\u00be\u0001\u0000\u0000\u0000\u00c0"+
-		"\u00c1\u0001\u0000\u0000\u0000\u00c1J\u0001\u0000\u0000\u0000\u00c2\u00c0"+
-		"\u0001\u0000\u0000\u0000\u00c3\u00c4\u0007\u0002\u0000\u0000\u00c4L\u0001"+
+		"\u00bbH\u0001\u0000\u0000\u0000\u00bc\u00bd\u0007\u0000\u0000\u0000\u00bd"+
+		"J\u0001\u0000\u0000\u0000\u00be\u00c2\u0007\u0001\u0000\u0000\u00bf\u00c1"+
+		"\u0007\u0002\u0000\u0000\u00c0\u00bf\u0001\u0000\u0000\u0000\u00c1\u00c4"+
+		"\u0001\u0000\u0000\u0000\u00c2\u00c0\u0001\u0000\u0000\u0000\u00c2\u00c3"+
+		"\u0001\u0000\u0000\u0000\u00c3L\u0001\u0000\u0000\u0000\u00c4\u00c2\u0001"+
 		"\u0000\u0000\u0000\u00c5\u00c6\u0007\u0003\u0000\u0000\u00c6N\u0001\u0000"+
 		"\u0000\u0000\u00c7\u00c8\u0007\u0004\u0000\u0000\u00c8P\u0001\u0000\u0000"+
 		"\u0000\u00c9\u00ca\u0005b\u0000\u0000\u00ca\u00cb\u0005i\u0000\u0000\u00cb"+
@@ -254,7 +254,7 @@ public class ProgramLexer extends Lexer {
 		"\u0000\u00d7\u00c9\u0001\u0000\u0000\u0000\u00d7\u00cc\u0001\u0000\u0000"+
 		"\u0000\u00d7\u00d0\u0001\u0000\u0000\u0000\u00d7\u00d4\u0001\u0000\u0000"+
 		"\u0000\u00d8R\u0001\u0000\u0000\u0000\u00d9\u00da\u0005_\u0000\u0000\u00da"+
-		"\u00db\u0007\u0002\u0000\u0000\u00dbT\u0001\u0000\u0000\u0000\u00dc\u00dd"+
+		"\u00db\u0007\u0003\u0000\u0000\u00dbT\u0001\u0000\u0000\u0000\u00dc\u00dd"+
 		"\u0005e\u0000\u0000\u00dd\u00de\u0005n\u0000\u0000\u00de\u00df\u0005d"+
 		"\u0000\u0000\u00dfV\u0001\u0000\u0000\u0000\u00e0\u00e4\u0007\u0005\u0000"+
 		"\u0000\u00e1\u00e3\u0007\u0006\u0000\u0000\u00e2\u00e1\u0001\u0000\u0000"+
@@ -264,7 +264,7 @@ public class ProgramLexer extends Lexer {
 		"\u00e8\u00e7\u0001\u0000\u0000\u0000\u00e9\u00ea\u0001\u0000\u0000\u0000"+
 		"\u00ea\u00e8\u0001\u0000\u0000\u0000\u00ea\u00eb\u0001\u0000\u0000\u0000"+
 		"\u00eb\u00ec\u0001\u0000\u0000\u0000\u00ec\u00ed\u0006,\u0000\u0000\u00ed"+
-		"Z\u0001\u0000\u0000\u0000\u0005\u0000\u00c0\u00d7\u00e4\u00ea\u0001\u0006"+
+		"Z\u0001\u0000\u0000\u0000\u0005\u0000\u00c2\u00d7\u00e4\u00ea\u0001\u0006"+
 		"\u0000\u0000";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

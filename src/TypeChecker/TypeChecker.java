@@ -70,7 +70,7 @@ public class TypeChecker {
             return false;
         }
         for (String participantString : localTypesMap.keySet()) {
-            //if (participantString.equals("Env")) continue;
+            if (participantString.equals("Env")) continue;
             ret = ret && this.checkParticipant(localTypesMap.get(participantString),
                     programTypeMap.get(participantString), new HashMap<>(), new HashMap<>(), new HashMap<>());
             if (!ret) {

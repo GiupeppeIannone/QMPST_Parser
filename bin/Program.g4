@@ -55,9 +55,9 @@ unitop
     ;
 
 //Tokens
+PAULI: [0-3];
 CONSTANT: [1-9][0-9]*;
 VAR: [a-z];
-PAULI: [a-z0-3];
 PROCNAME: [A-Z];
 
 BASETYPE
