@@ -28,8 +28,7 @@ public class myFrame extends JFrame implements ActionListener {
 
     JMenuBar menubar;
     JMenu fileMenu;
-    JMenu helpMenu;
-    JMenuItem saveItem, loadGlobalItem, loadSystemItem;
+    JMenuItem loadGlobalItem, loadSystemItem;
     JPanel inputHelperPanel, inputPanel, inputSubPanel1, inputSubPanel2, outputPanel;
     JButton recButton, sndButton, rcvButton, pauliButton;
     JTextField globalTypeField, systemsField;
@@ -52,15 +51,11 @@ public class myFrame extends JFrame implements ActionListener {
         // Menubar Inizialization
         menubar = new JMenuBar();
         fileMenu = new JMenu("File");
-        helpMenu = new JMenu("Help");
         menubar.add(fileMenu);
-        menubar.add(helpMenu);
-        saveItem = new JMenuItem("Save");
         loadGlobalItem = new JMenuItem("Load GlobalType");
         loadSystemItem = new JMenuItem("Load System");
         loadGlobalItem.addActionListener(this);
         loadSystemItem.addActionListener(this);
-        fileMenu.add(saveItem);
         fileMenu.add(loadGlobalItem);
         fileMenu.add(loadSystemItem);
 
@@ -134,14 +129,14 @@ public class myFrame extends JFrame implements ActionListener {
         outputLabel = new JLabel("OUTPUT");
         outputLabel.setPreferredSize(new Dimension(200, 200));
         calculationButton = new JButton("CHECK");
-        debugGlobalButton = new JButton("GLOBAL");
-        debugSystemButton = new JButton("SYSTEM");
+        // debugGlobalButton = new JButton("GLOBAL");
+        // debugSystemButton = new JButton("SYSTEM");
         calculationButton.addActionListener(this);
-        debugGlobalButton.addActionListener(this);
-        debugSystemButton.addActionListener(this);
+        // debugGlobalButton.addActionListener(this);
+        // debugSystemButton.addActionListener(this);
         outputPanel.add(calculationButton);
-        outputPanel.add(debugGlobalButton);
-        outputPanel.add(debugSystemButton);
+        // outputPanel.add(debugGlobalButton);
+        // outputPanel.add(debugSystemButton);
         outputPanel.add(outputLabel);
         outputPanel.setBackground(new Color(160, 160, 160));
         outputPanel.setPreferredSize(new Dimension(200, 200));
@@ -208,7 +203,7 @@ public class myFrame extends JFrame implements ActionListener {
                 }
             }
         }
-        else if (e.getSource() == debugGlobalButton) {
+        /* else if (e.getSource() == debugGlobalButton) {
             GlobalParser globalParser = getGlobalParser(globalTypeField.getText());
             ParseTree antlrGlobalTree = globalParser.prog();
             ParseTreeToAST globalVisitor = new ParseTreeToAST();
@@ -223,7 +218,7 @@ public class myFrame extends JFrame implements ActionListener {
             for (String keyString : systemsMap.keySet()) {
                 System.out.print("Participant: " + keyString + " -> " + systemsMap.get(keyString).toString() + "; \n\n");
             }
-        }
+        } */
         else if (e.getSource() == calculationButton) {
             GlobalParser globalParser = getGlobalParser(globalTypeField.getText());
             ParseTree antlrGlobalTree = globalParser.prog();
